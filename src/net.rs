@@ -38,18 +38,16 @@ pub async fn setup_wifi(
     spi: PioSpi<'static, PIO0, 0, DMA_CH0>,
     pwr: Output<'static>,
 ) -> (Control<'static>, embassy_net::Stack<'static>) {
-    // let fw =
-    //     include_bytes!("binary_clock\\embassy\\cyw43-firmware\\43439A0.bin");
-    // let clm =
-    //     include_bytes!("binary_clock\\embassy\\cyw43-firmware\\43439A0_clm.bin");
+    let fw = include_bytes!("../../embassy/cyw43-firmware/43439A0.bin");
+    let clm = include_bytes!("../../embassy/cyw43-firmware/43439A0_clm.bin");
 
     // To make flashing faster for development, you may want to flash the firmwares independently
     // at hardcoded addresses, instead of baking them into the program with `include_bytes!`:
     //     probe-rs download ../../cyw43-firmware/43439A0.bin --binary-format bin --chip RP235x --base-address 0x10100000
     //     probe-rs download ../../cyw43-firmware/43439A0_clm.bin --binary-format bin --chip RP235x --base-address 0x10140000
 
-    let fw = unsafe { core::slice::from_raw_parts(0x10100000 as *const u8, 230321) };
-    let clm = unsafe { core::slice::from_raw_parts(0x10140000 as *const u8, 4752) };
+    // let fw = unsafe { core::slice::from_raw_parts(0x10100000 as *const u8, 230321) };
+    // let clm = unsafe { core::slice::from_raw_parts(0x10140000 as *const u8, 4752) };
 
     static STATE: StaticCell<cyw43::State> = StaticCell::new();
     let state = STATE.init(cyw43::State::new());
@@ -139,7 +137,7 @@ pub async fn get_ntptime(stack: embassy_net::Stack<'static>) -> i64 {
 
     let context = NtpContext::new(Timestamp::default());
 
-    let ntp_addrs: heapless::Vec<embassy_net::IpAddress, 1> = stack
+    let ntp_addrs = stack
         .dns_query(NTP_SERVER, embassy_net::dns::DnsQueryType::A)
         .await
         .expect("Failed to resolve DNS");

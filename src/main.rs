@@ -64,6 +64,8 @@ async fn main(spawner: Spawner) {
     let cur_time: i64 = net::get_ntptime(stack).await;
     set_time(cur_time);
 
+    control.leave().await;
+
     let mut ledpio = Pio::new(p.PIO1, Irqs);
 
     let ws2812_prg = PioWs2812Program::new(&mut ledpio.common);

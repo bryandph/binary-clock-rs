@@ -1,12 +1,11 @@
-use crate::{rtg, Irqs};
+use crate::rtg;
 use chrono::{DateTime, Datelike, TimeZone, Timelike};
 use chrono_tz::Tz;
 use chrono_tz::US::Central;
 use cyw43::Control;
 use defmt::*;
 use embassy_rp::peripherals::PIO1;
-use embassy_rp::pio::Pio;
-use embassy_rp::pio_programs::ws2812::{PioWs2812, PioWs2812Program};
+use embassy_rp::pio_programs::ws2812::PioWs2812;
 use embassy_time::{Duration, Ticker, Timer};
 use heapless::{String, Vec};
 use smart_leds::colors::{BLACK, WHITE};

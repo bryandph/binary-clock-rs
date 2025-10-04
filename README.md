@@ -35,8 +35,8 @@ Ensure the following environment variables are set before attempting to build wi
 
 You will need to flash the WiFi firmware (download it from the [Embassy repo](https://github.com/embassy-rs/embassy)) ahead of time using the following commands:
 ```bash
-probe-rs download ../../cyw43-firmware/43439A0.bin --binary-format bin --chip RP235x --base-address 0x10100000
-probe-rs download ../../cyw43-firmware/43439A0_clm.bin --binary-format bin --chip RP235x --base-address 0x10140000
+probe-rs download ../embassy/cyw43-firmware/43439A0.bin --binary-format bin --chip RP235x --base-address 0x10100000
+probe-rs download ../embassy/cyw43-firmware/43439A0_clm.bin --binary-format bin --chip RP235x --base-address 0x10140000
 
 ```
 You can also configure the program to include the firmware at at compile time by adding the following lines to `net.rs` and commenting out the eixsting `fw` and `cli` declerations:
